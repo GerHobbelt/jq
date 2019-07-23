@@ -255,10 +255,10 @@ AS_IF([test "x$with_oniguruma" != xno], [
        # check for ONIGURUMA library, either in /usr or where requested
        CFLAGS="$CFLAGS $onig_CFLAGS"
        LDFLAGS="$LDFLAGS $onig_LDFLAGS"
-       AC_CHECK_HEADER("oniguruma.h",
-          AC_CHECK_LIB([onig],[onig_version]))
+      AC_CHECK_HEADER("onigmo.h",
+         AC_CHECK_LIB([onigmo],[onig_version]))
        # handle check results
-       AS_IF([test "x$ac_cv_lib_onig_onig_version" != "xyes"], [
+       AS_IF([test "x$ac_cv_lib_onigmo_onig_version" != "xyes"], [
           build_oniguruma=yes
           AC_MSG_NOTICE([Oniguruma was not found. Will use the packaged oniguruma.])
        ])
@@ -281,4 +281,3 @@ AC_SUBST([BUNDLER], ["$bundle_cmd"])
 AC_CONFIG_MACRO_DIR([config/m4])
 AC_CONFIG_FILES([Makefile libjq.pc])
 AC_OUTPUT
-
