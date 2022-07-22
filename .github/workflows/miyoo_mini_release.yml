@@ -1,0 +1,36 @@
+name: Miyoo Mini Release Build
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  miyoo-mini:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name:  Install toolchain
+      working-directory: ${{github.workspace}}
+      run: sudo scripts/miyoo_mini/setup_toolchain.sh
+
+    - name:  Build
+      working-directory: ${{github.workspace}}
+      run: >
+        source scripts/miyoo_mini/toolchain_env.sh &&
+        scripts/miyoo_mini/build.sh
+
+    - name: Update Release
+      if: ${{ github.event_name == 'release' && github.event.action == 'created' && !env.ACT }}
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "jq"
+        allowUpdates: true
+        omitBody: true
+        omitName: true
+        omitPrereleaseDuringUpdate: true
+        token: ${{ secrets.GITHUB_TOKEN }}
