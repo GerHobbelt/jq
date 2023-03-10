@@ -287,6 +287,18 @@ AS_IF([test "x$with_oniguruma" != xno], [
 AC_SUBST(onig_CFLAGS)
 AC_SUBST(onig_LDFLAGS)
 
+AC_ARG_WITH([migemo],
+  [AS_HELP_STRING([--with-migemo],
+    [enable migemo])],
+  [],
+  [])
+AS_IF([test "x$with_migemo" != xno], [
+  AS_IF([test "x$with_oniguruma" = xno],
+    [AC_MSG_ERROR([migemo needs oniguruma])],
+    [AC_SEARCH_LIBS([migemo_open], [migemo])]
+  ])
+)
+
 AM_CONDITIONAL([BUILD_ONIGURUMA], [test "x$build_oniguruma" = xyes])
 AM_CONDITIONAL([WITH_ONIGURUMA], [test "x$with_oniguruma" != xno])
 AC_SUBST([BUNDLER], ["$bundle_cmd"])

@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - jq-[0-9]+.[0-9]+-custom
+      - jq-[0-9]+.[0-9]+-custom-r[0-9]+
+      - jq-[0-9]+.[0-9]+.[0-9]+-custom
+      - jq-[0-9]+.[0-9]+.[0-9]+-custom-r[0-9]+
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y -qq automake autoconf
+
+      - name: Build
+        run: |
+          autoreconf -i
+          ./configure --disable-docs --disable-valgrind
+          make dist-xz
+
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "*.tar.xz"
