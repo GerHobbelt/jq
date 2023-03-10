@@ -45,6 +45,7 @@ static jv f_ ## name(jq_state *jq, jv input, jv a, jv b) { \
 BINOPS
 #undef BINOP
 
+#include "jq_migemo.h"
 
 static jv type_error(jv bad, const char* msg) {
   char errbuf[15];
@@ -1108,6 +1109,20 @@ static jv f_match(jq_state *jq, jv input, jv regex, jv modifiers, jv testmode) {
   jv_free(regex);
   return result;
 }
+
+static jv f_match_migemo(jq_state *jq, jv input, jv regex, jv modifiers, jv testmode) {
+  migemo *m = get_migemo();
+  unsigned char *migemo_pattern;
+  migemo_pattern = migemo_query(m, (const unsigned char *)jv_string_value(regex));
+
+  jv_free(regex);
+
+  jv result = f_match(jq, input, jv_string((char *)migemo_pattern), modifiers, testmode);
+
+  migemo_release(m, migemo_pattern);
+
+  return result;
+}
 #else /* !HAVE_LIBONIG */
 static jv f_match(jq_state *jq, jv input, jv regex, jv modifiers, jv testmode) {
   jv_free(input);
@@ -1948,6 +1963,7 @@ BINOPS
   CFUNC(f_get_prog_origin, "get_prog_origin", 1),
   CFUNC(f_get_jq_origin, "get_jq_origin", 1),
   CFUNC(f_match, "_match_impl", 4),
+  CFUNC(f_match_migemo, "_match_migemo_impl", 4),
   CFUNC(f_modulemeta, "modulemeta", 1),
   CFUNC(f_input, "input", 1),
   CFUNC(f_debug, "debug", 1),

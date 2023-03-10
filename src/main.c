@@ -36,6 +36,8 @@ extern void jv_tsd_dtoa_ctx_init();
 #include "src/version.h"
 #include "src/config_opts.inc"
 
+#include "jq_migemo.h"
+
 int jq_testsuite(jv lib_dirs, int verbose, int argc, char* argv[]);
 
 /*
@@ -691,6 +693,7 @@ out:
     ret = JQ_ERROR_SYSTEM;
   }
 
+  close_migemo();
   jv_free(ARGS);
   jv_free(program_arguments);
   jq_util_input_free(&input_state);

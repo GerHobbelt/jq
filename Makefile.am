@@ -7,7 +7,7 @@ LIBJQ_INCS = src/builtin.h src/bytecode.h src/compile.h                 \
         src/linker.h src/locfile.h src/opcode_list.h src/parser.y       \
         src/util.h src/jv_dtoa_tsd.h src/jv_thread.h src/jv_private.h   \
         vendor/decNumber/decContext.h vendor/decNumber/decNumber.h      \
-        vendor/decNumber/decNumberLocal.h
+        vendor/decNumber/decNumberLocal.h src/jq_migemo.h
 
 LIBJQ_SRC = src/builtin.c src/bytecode.c src/compile.c src/execute.c    \
         src/jq_test.c src/jv.c src/jv_alloc.c src/jv_aux.c              \
@@ -15,6 +15,7 @@ LIBJQ_SRC = src/builtin.c src/bytecode.c src/compile.c src/execute.c    \
         src/jv_unicode.c src/linker.c src/locfile.c src/util.c          \
         src/jv_dtoa_tsd.c                                               \
         vendor/decNumber/decContext.c vendor/decNumber/decNumber.c      \
+        src/jq_migemo.c                                                 \
         ${LIBJQ_INCS}
 
 ### C build options
@@ -190,11 +191,6 @@ jq.1: jq.1.prebuilt
 CLEANFILES += jq.1
 
 ### Build oniguruma
-
-if BUILD_ONIGURUMA
-libjq_la_LIBADD += vendor/oniguruma/src/.libs/libonig.la
-SUBDIRS = vendor/oniguruma
-endif
 
 AM_CFLAGS += $(onig_CFLAGS)
 
