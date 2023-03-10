@@ -28,12 +28,12 @@
 // for how to choose these. The order is same as jv_kind definition, and
 // the last color is used for object keys.
 #define DEFAULT_COLORS \
-  {COL("0;90"),    COL("0;39"),      COL("0;39"),     COL("0;39"),\
-   COL("0;32"),    COL("1;39"),      COL("1;39"),     COL("1;34")};
+  {COL("4;38;5;250"), COL("0;38;5;219"), COL("0;38;5;219"), COL("0;33"),\
+   COL("0;38;5;214"), COL("0;36"), COL("0;38;5;119"), COL("4:3;38;5;201")};
 static const char *const default_colors[] = DEFAULT_COLORS;
 static const char *colors[] = DEFAULT_COLORS;
 #define COLORS_LEN (sizeof(colors) / sizeof(colors[0]))
-#define FIELD_COLOR (colors[7])
+#define FIELD_COLOR (COL("0;38;5;229"))
 
 static char *colors_buf = NULL;
 int jq_set_colors(const char *code_str) {
