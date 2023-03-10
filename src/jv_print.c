@@ -29,10 +29,17 @@
 // the last color is used for object keys.
 static char color_bufs[8][16];
 static const char *color_bufps[8];
-static const char* def_colors[] =
-  {COL("0;90"),    COL("0;37"),      COL("0;37"),     COL("0;37"),
-   COL("0;32"),    COL("1;37"),      COL("1;37"),     COL("1;34")};
-#define FIELD_COLOR (colors[7])
+static const char* def_colors[] = {
+  COL("4;38;5;250"),
+  COL("0;38;5;219"),
+  COL("0;38;5;219"),
+  COL("0;33"),
+  COL("0;38;5;214"),
+  COL("0;36"),
+  COL("0;38;5;119"),
+  COL("4:3;38;5;201"),
+};
+#define FIELD_COLOR (COL("0;38;5;229"))
 
 static const char **colors = def_colors;
 
